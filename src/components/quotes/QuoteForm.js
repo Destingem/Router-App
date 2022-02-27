@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-
+import { useRef, useState } from 'react';
+import Router ,{ Route, Switch, Redirect } from "react-router-dom";
 import Card from '../UI/Card';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import classes from './QuoteForm.module.css';
@@ -7,7 +7,7 @@ import classes from './QuoteForm.module.css';
 const QuoteForm = (props) => {
   const authorInputRef = useRef();
   const textInputRef = useRef();
-
+  const [isSubmitted, setIsSubmitted] = useState(false) 
   function submitFormHandler(event) {
     event.preventDefault();
 
@@ -17,10 +17,13 @@ const QuoteForm = (props) => {
     // optional: Could validate here
 
     props.onAddQuote({ author: enteredAuthor, text: enteredText });
+    setIsSubmitted(true)
   }
-
+  
   return (
+   
     <Card>
+     {isSubmitted  && <Redirect to="/"/>}
       <form className={classes.form} onSubmit={submitFormHandler}>
         {props.isLoading && (
           <div className={classes.loading}>

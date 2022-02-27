@@ -1,18 +1,26 @@
-import { Fragment } from 'react';
-
+import { Fragment, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+ import { quoteActions } from '../../store/quote';
 import QuoteItem from './QuoteItem';
 import classes from './QuoteList.module.css';
-
+console.log(quoteActions);
+let firstLoad = true
 const QuoteList = (props) => {
+  const dispatch = useDispatch()
+  const quotes = useSelector(state => {return state.quote.quotes})
+  console.log(quotes);
+  
+  
   return (
     <Fragment>
       <ul className={classes.list}>
-        {props.quotes.map((quote) => (
+        {quotes.map((quote) => (
           <QuoteItem
             key={quote.id}
             id={quote.id}
             author={quote.author}
             text={quote.text}
+            path={props.path}
           />
         ))}
       </ul>
