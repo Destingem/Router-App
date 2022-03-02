@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import React from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import LoadingSpinner from "./components/UI/LoadingSpinner";
-import NavBar from "./components/Navbar";
-import HomePage from "./pages/homepage";
 import { useDispatch } from "react-redux";
 import {loadDBData} from "./store/quote"
-import Compose from "./pages/compose";
-import Detail from "./pages/detail";
-import Error404 from "./pages/error404";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+//Elements
+import LoadingSpinner from "./components/UI/LoadingSpinner";
+import NavBar from "./components/Navbar";
+// Lazy
+const HomePage = React.lazy(() =>  import("./pages/homepage"))
+const Compose = React.lazy(() =>  import("./pages/compose"))
+const Detail = React.lazy(()=> import("./pages/detail"))
+const Error404 = React.lazy(()=> import("./pages/error404"))
 function App() {
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true);
@@ -24,7 +26,7 @@ function App() {
     <div>
       {loading ? <LoadingSpinner /> : <NavBar />}
 
-
+      <Suspense fallback={<LoadingSpinner />}>
       <Switch>
         <Route exact path="/">
           <HomePage />
@@ -39,7 +41,7 @@ function App() {
         <Error404 />
         </Route>
       </Switch>
-      
+      </Suspense>
 
     </div>
   );
