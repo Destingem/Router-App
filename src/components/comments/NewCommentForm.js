@@ -1,15 +1,20 @@
+import { current } from '@reduxjs/toolkit';
 import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { postCommentDB } from '../../store/quote';
 
 import classes from './NewCommentForm.module.css';
 
 const NewCommentForm = (props) => {
   const commentTextRef = useRef();
-
+  const dispatch = useDispatch()
   const submitFormHandler = (event) => {
     event.preventDefault();
-
-    // optional: Could validate here
-
+    let value = commentTextRef.current.value
+    console.log(props.key);
+    if (value.length !== 0 || undefined || null) {
+      dispatch(postCommentDB({comment: value, path: props.id}))
+    }
     // send comment to server
   };
 

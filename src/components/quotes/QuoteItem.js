@@ -21,7 +21,7 @@ useEffect(()=> {
         </blockquote>
         <figcaption>{item.author}</figcaption>
       </figure>
-      {item.path ? null : (
+      {item.hideBtn ? null : (
         <a className="btn" onClick={handleClick}>
           View Fullscreen
         </a>

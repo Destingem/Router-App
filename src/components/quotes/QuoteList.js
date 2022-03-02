@@ -4,13 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import QuoteItem from './QuoteItem';
 import classes from './QuoteList.module.css';
 console.log(quoteActions);
-let firstLoad = true
 const QuoteList = (props) => {
   const dispatch = useDispatch()
-  const quotes = useSelector(state => {return state.quote.quotes})
+  let quotes = useSelector(state => {return state.quote.quotes})
   console.log(quotes);
-  
-  
   return (
     <Fragment>
       <ul className={classes.list}>

@@ -2,18 +2,21 @@ import QuoteItem from "../components/quotes/QuoteItem";
 import Routes, { Route, useLocation, useLocations } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import NewCommentForm from "../components/comments/NewCommentForm"
+import CommentItem from "../components/comments/CommentItem"
+import CommentsList from "../components/comments/CommentsList"
 export default function Detail() {
   const [quote, setQuote] = useState({
     key: "fufu",
     id: "fake",
     author: "",
     text: "",
+    comments: ["a"]
   });
   const route = useLocation();
   const state = useSelector((state) => {
     return state.quote;
   });
-  console.log(route);
   useEffect(() => {
     if (state) {
       var i = state.quotes.filter((item) => {
@@ -26,7 +29,6 @@ export default function Detail() {
         }
       });
       if (i.length == 0) {
-        console.log(i.length);
         setQuote(()=> {return {
           key: "fufu",
           id: "fake",
@@ -45,7 +47,10 @@ export default function Detail() {
         id={quote.id}
         author={quote.author}
         text={quote.text}
+        hideBtn = {true}
       />
+      {quote.comments ?<CommentsList comments={quote.comments}/>: null}
+      <NewCommentForm id={quote.id} route={route.pathname}/>
     </>
   );
 }
